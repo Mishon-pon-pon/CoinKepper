@@ -3,9 +3,8 @@ const path = require('path');
 const config = require('config');
 
 exports.init = app => app.use(async (ctx, next) => {
-    ctx.render = (filePath, local) => {
-        filePath = path.join(config.get('templatePath'), filePath);
-        return pug.renderFile(filePath, local);
+    ctx.render = (templatePath, local) => {
+        return pug.renderFile(path.join(config.get('templateFolder'), templatePath), local);
     }
     await next();
 })
