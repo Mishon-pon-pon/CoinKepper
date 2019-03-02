@@ -1,0 +1,18 @@
+extends layout
+block content
+    div(class="container")
+    div(class="row")
+        div(class="col-6")
+            h1 Вход
+            div(id="createUser")
+                div(class="form-group")
+                    label(for="email") Email
+                    input(type="email" name='email' class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите email")
+                    small(id="emailHelp" class="form-text text-muted")
+                div(class="form-group")
+                    label(for="password") Пароль
+                    input(type="password" name="password" class="form-control" id="password" placeholder="Введите password")
+                a(href="/")
+                    button(type="submit" class="btn btn-primary" id="sub") Войти
+                a(href="/registraton")
+                    button(class="btn btn-primary") Зарегистрироваться
