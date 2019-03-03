@@ -1,0 +1,20 @@
+extends ./layout
+block content
+    div(class="container")
+    div(class="row")
+      div(class="col-6")
+        h1 Регистрация
+        div(id="createUser")
+          div(class="form-group")
+            label(for="exampleInputEmail1") Email
+            input(type="email" name='email' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email")
+          div(class="form-group")
+            label(for="exampleInputPassword1") Пароль
+            input(type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password")
+          div(class="form-group")
+            label(for="DisplayName") Имя
+            input(type="displayname" name="displayname" class="form-control" id="DisplayName" placeholder="DisplayName")
+          a(href="/two")
+            button(type="submit" class="btn btn-primary" id="sub") Submit
+    script
+      include script.js
