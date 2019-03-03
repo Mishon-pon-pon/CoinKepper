@@ -7,9 +7,7 @@ exports.get = async (ctx, next) => {
 }
 
 exports.post = async (ctx, next) => {
-    saveNewUser(ctx.request.body, () => {
-        console.log('exelent')
-        ctx.body = 'ok';
-        ctx.statusCode = 200;
-    });
+    await saveNewUser(ctx.request.body, () => {});
+    ctx.body = 'ok';
+    ctx.statusCode = 200;
 }
