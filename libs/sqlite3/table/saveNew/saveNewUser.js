@@ -12,7 +12,7 @@ module.exports = async (obj, callback) => {
             avatarpath) 
             VALUES (?, ?, ?, ?, ?, ?, ?)`);
     
-        newUser.run(obj.email, false, obj.displayname, new Date(), obj.password, 'salt', 'img/ava.jpg', () => {
+        newUser.run(obj.email, false, obj.displayname, new Date(), obj.password, obj.salt, 'img/ava.jpg', () => {
             callback();
             resolve();
         });
