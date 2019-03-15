@@ -1,5 +1,7 @@
 module.exports = {
-    port: 20319,
+    server: {
+        port: 20319
+    },
     templateFolder: process.cwd() + '/templates',
     dataBase: 'db.db',
     public: 'public',
