@@ -4,17 +4,17 @@ block content
     div(class="row")
       div(class="col-6")
         h1 Регистрация
-        div(id="createUser")
-          div(class="form-group")
-            label(for="email") Email
-            input(type="email" name='email' class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите email")
-          div(class="form-group")
-            label(for="password") Пароль
-            input(type="password" name="password" class="form-control" id="password" placeholder="Введите пароль")
-          div(class="form-group")
-            label(for="displayName") Имя
-            input(type="displayname" name="displayname" class="form-control" id="displayName" placeholder="Введите Имя")
-          a(href="#")
-            button(type="submit" class="btn btn-primary" id="regButton") Зарегистрироваться
+        form(method="POST")
+          div(id="createUser")
+            div(class="form-group")
+              label(for="email") Email
+              input(type="email" name='email' class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите email")
+            div(class="form-group")
+              label(for="password") Пароль
+              input(type="password" name="password" class="form-control" id="password" placeholder="Введите пароль")
+            div(class="form-group")
+              label(for="displayName") Имя
+              input(type="displayname" name="displayname" class="form-control" id="displayName" placeholder="Введите Имя")
+          input(type="submit" class="btn btn-primary" placeholder="Зарегистрироваться")
     script(src="/script.js")
        

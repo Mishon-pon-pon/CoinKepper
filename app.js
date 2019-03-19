@@ -11,7 +11,7 @@ require('./handlers/04_bodyparser').init(app);
 
 router.get('/login', require('./routers/login').get);
 router.get('/registration', require('./routers/registration').get);
-router.post('/newUser', require('./routers/registration').post);
+router.post('/registration', require('./routers/registration').post);
 
 app.use(router.routes());
 
