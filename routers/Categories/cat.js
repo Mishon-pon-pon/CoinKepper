@@ -11,7 +11,7 @@ exports.post = async (ctx, next) => {
             newCat.run(ctx.request.body.categoryName, ctx.session.passport.user, new Date());
             newCat.finalize((err) => {
                 if (!err) {
-                   resolve(true)
+                    resolve(true)
                 }
             });
         })
@@ -22,4 +22,16 @@ exports.post = async (ctx, next) => {
         }
     })
 
+}
+
+exports.get = async (ctx, next) => {
+    let categories = [];
+    await new Promise(resolve => {
+        db.each(`Select * from Categories where AccountId = ?`, [ctx.session.passport.user], (err, row) => {
+            categories.push(row);
+        }, () => {
+            ctx.body = categories;
+            resolve();
+        });
+    });
 }

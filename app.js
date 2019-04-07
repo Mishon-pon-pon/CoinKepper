@@ -20,7 +20,8 @@ router.get('/', require('./routers/RegAndLog/frontPage').get);
 router.post('/', require('./routers/RegAndLog/login').post);
 
 // categories
-router.post('/category/new', require('./routers/Categories/new').post);
+router.post('/category/new', require('./routers/Categories/cat').post);
+router.get('/category/exist', require('./routers/Categories/cat').get);
 
 app.use(router.routes());
 
