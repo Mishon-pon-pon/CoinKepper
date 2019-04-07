@@ -1,3 +1,8 @@
-exports.get = (ctx, next) => {
-    ctx.body = ctx.render('login.pug');
-}
+const passport = require('../libs/passport');
+
+exports.post = passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/',
+    failureFlash: true,
+    successFlash: true
+});

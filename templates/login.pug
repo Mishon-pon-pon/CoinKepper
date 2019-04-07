@@ -4,7 +4,7 @@ block content
     div(class="row")
         div(class="col-6")
             h1 Вход
-            div(id="createUser")
+            form(action="/" method="post")
                 div(class="form-group")
                     label(for="email") Email
                     input(type="email" name='email' class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите email")
@@ -12,10 +12,7 @@ block content
                 div(class="form-group")
                     label(for="password") Пароль
                     input(type="password" name="password" class="form-control" id="password" placeholder="Введите password")
-    .row
-        .col-12
-            a(href="/")
-                button(type="submit" class="btn btn-primary" id="sub") Войти
+                input(type="submit" class="btn btn-primary" id="sub" value="Войти")
     .row
         .col-12
             a(href="/registration")

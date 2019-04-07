@@ -24,7 +24,7 @@ exports.post = async (ctx, next) => {
     ctx.request.body.password = await cryptoPass(ctx.request.body.salt, ctx.request.body.password);
     await saveNewUser(ctx.request.body, () => {});
     console.log('localhost:20319/')
-    sendMail(ctx.request.body.email, 'http://localhost:20319/:' + ctx.request.body.salt);
+    sendMail(ctx.request.body.email, 'http://localhost:20319/confirmemail/:' + ctx.request.body.salt);
     ctx.body = ctx.render('infoConfirmEmail.pug', {email: ctx.request.body.email});
     ctx.statusCode = 200;
 }
