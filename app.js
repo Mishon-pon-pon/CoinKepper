@@ -18,6 +18,7 @@ router.post('/registration', require('./routers/RegAndLog/registration').post);
 router.get('/confirmemail/:id', require('./routers/RegAndLog/confirmEmail').get);
 router.get('/', require('./routers/RegAndLog/frontPage').get);
 router.post('/', require('./routers/RegAndLog/login').post);
+router.post('/logout', require('./routers/RegAndLog/logout').post);
 
 // categories
 router.post('/category/new', require('./routers/Categories/cat').post);

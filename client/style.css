@@ -96,3 +96,7 @@ display: inline-block;
 .change {
   width: 45px;
 }
+
+#logout {
+  margin-top: 10px;
+}
