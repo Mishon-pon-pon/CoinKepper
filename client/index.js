@@ -3,11 +3,11 @@ const card = post => {
                     <div class="input-group-prepend">
                         <span class="input-group-text">${post.Name}</span>
                     </div>
-                    <input id='input${post.CategoryId}' type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="">
+                    <input id='input${post.CategoryId}' type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="${post.Value}">
                     <div class="input-group-append">
                         <span class="input-group-text">.00 руб.</span>
                     </div>
-                    <button style='font-size: 10px;' id="${post.CategoryId}" type="button" class="btn btn-success" style="margin:15px;">+</button>
+                    <button style='font-size: 10px;' categoryid="${post.CategoryId}" type="button" class="btn btn-success" style="margin:15px;">+</button>
                     <div class="dropdown dropright"  sytle="margin-left:15px;">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Дополнительно
@@ -24,6 +24,10 @@ function _$(selector) {
     return document.getElementById(selector);
 }
 
+
+
+
+
 _$('addCategory').addEventListener('click', function () {
     Category.CreateCat({
         categoryName: _$('categoryName').value
@@ -34,13 +38,27 @@ _$('addCategory').addEventListener('click', function () {
 document.addEventListener("DOMContentLoaded", () => {
     let _html = '';
     Category.GetCat().then(category => {
-        for(let i = 0; i < category.length; i++) {
-            
+        for (let i = 0; i < category.length; i++) {
+
             _html += card(category[i]);
         }
         _$('CategoriesDivContent').innerHTML = _html;
     })
 });
+
+_$('body').addEventListener('click', (event) => {
+    if (event.target.getAttribute('categoryid')) {
+        let value = _$('input' + event.target.getAttribute('categoryid')).value;
+        Sum.AddSum({
+            value: value,
+            CategoryId: event.target.getAttribute('categoryid')
+        }).then(res => res);
+        _$('input' + event.target.getAttribute('categoryid')).value = ''
+    }
+})
+
+
+
 
 class Category {
     static GetCat() {
@@ -64,6 +82,19 @@ class Category {
         }).then(res => res)
     }
 };
+
+class Sum {
+    static AddSum(value) {
+        return fetch('/sum/new', {
+            method: 'POST',
+            body: JSON.stringify(value),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res)
+    }
+}
 
 
 
