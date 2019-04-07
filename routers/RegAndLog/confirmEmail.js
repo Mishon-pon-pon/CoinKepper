@@ -1,4 +1,4 @@
-const db = require('../libs/sqlite3/createDB');
+const db = require('../../libs/sqlite3/createDB');
 
 exports.get = async (ctx, next) => {
     let id = ctx.params.id.slice(1);

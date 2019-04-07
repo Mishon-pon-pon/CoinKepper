@@ -1,10 +1,10 @@
-const CreateTableUsers = require('../libs/sqlite3/table/createUsers');
-const saveNewUser = require('../libs/sqlite3/table/saveNew/saveNewUser');
-const cryptoPass = require('../libs/crypto/cryptoPass');
-const db = require('../libs/sqlite3/createDB');
+const CreateTableUsers = require('../../libs/sqlite3/table/createUsers');
+const saveNewUser = require('../../libs/sqlite3/table/saveNew/saveNewUser');
+const cryptoPass = require('../../libs/crypto/cryptoPass');
+const db = require('../../libs/sqlite3/createDB');
 const crypto = require('crypto');
 const config = require('config');
-const sendMail = require('../libs/nodemailer/nodemailer');
+const sendMail = require('../../libs/nodemailer/nodemailer');
 
 exports.get = async (ctx, next) => {
     await CreateTableUsers();

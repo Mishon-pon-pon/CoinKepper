@@ -12,12 +12,15 @@ require('./handlers/08_session').init(app);
 require('./handlers/06_log').init(app);
 require('./handlers/07_passport').init(app);
 
-router.get('/registration', require('./routers/registration').get);
-router.post('/registration', require('./routers/registration').post);
-router.get('/confirmemail/:id', require('./routers/confirmEmail').get);
-router.get('/', require('./routers/frontPage').get);
-router.post('/', require('./routers/login').post);
-router.get('/app', require('./routers/app').get)
+// registration and login
+router.get('/registration', require('./routers/RegAndLog/registration').get);
+router.post('/registration', require('./routers/RegAndLog/registration').post);
+router.get('/confirmemail/:id', require('./routers/RegAndLog/confirmEmail').get);
+router.get('/', require('./routers/RegAndLog/frontPage').get);
+router.post('/', require('./routers/RegAndLog/login').post);
+
+// categories
+router.post('/category/new', require('./routers/Categories/new').post);
 
 app.use(router.routes());
 

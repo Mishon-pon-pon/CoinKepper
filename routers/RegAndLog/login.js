@@ -1,4 +1,4 @@
-const passport = require('../libs/passport');
+const passport = require('../../libs/passport');
 
 exports.post = passport.authenticate('local', {
     successRedirect: '/',
