@@ -1,9 +1,11 @@
 const db = require('../../libs/sqlite3/createDB');
 const createCategories = require('../../libs/sqlite3/table/createCategories');
+const createSum = require('../../libs/sqlite3/table/createSum');
 
 exports.post = async (ctx, next) => {
     // создаем таблицу если ее нет
     await createCategories();
+    await createSum();
     //
     await new Promise(resolve => {
         db.serialize(() => {
