@@ -9,8 +9,8 @@ exports.post = async (ctx, next) => {
     //
     await new Promise(resolve => {
         db.serialize(() => {
-            let newCat = db.prepare(`INSERT INTO Categories(Name, AccountId, createDate) VALUES(?, ?, ?)`);
-            newCat.run(ctx.request.body.categoryName, ctx.session.passport.user, new Date());
+            let newCat = db.prepare(`INSERT INTO Categories(Name, AccountId, createDate) VALUES(?, ?, CURRENT_TIMESTAMP)`);
+            newCat.run(ctx.request.body.categoryName, ctx.session.passport.user);
             newCat.finalize((err) => {
                 if (!err) {
                     resolve(true)
@@ -29,7 +29,10 @@ exports.post = async (ctx, next) => {
 exports.get = async (ctx, next) => {
     let categories = [];
     await new Promise(resolve => {
-        db.each(`Select * from Categories where AccountId = ?`, [ctx.session.passport.user], (err, row) => {
+        db.each(`Select sum(s.Value) as Value, cat.CategoryId, cat.Name   from Categories as cat
+        join Sum as s ON s.CategoryId = cat.CategoryId
+        where AccountId = ?
+		GROUP BY cat.CategoryId`, [ctx.session.passport.user], (err, row) => {
             categories.push(row);
         }, () => {
             ctx.body = categories;

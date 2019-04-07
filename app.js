@@ -24,6 +24,9 @@ router.post('/logout', require('./routers/RegAndLog/logout').post);
 router.post('/category/new', require('./routers/Categories/cat').post);
 router.get('/category/exist', require('./routers/Categories/cat').get);
 
+// sum
+router.post('/sum/new', require('./routers/Sum/sum').post);
+
 app.use(router.routes());
 
 module.exports = app;
