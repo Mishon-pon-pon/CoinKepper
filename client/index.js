@@ -1,9 +1,9 @@
 const card = post => {
     return `<div class="input-group mb-3" id="${post.CategoryId}">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">${post.CategoryName}</span>
+                        <span class="input-group-text">${post.Name}</span>
                     </div>
-                    <input id='input${post.CategoryId}' type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="${post.cnt}">
+                    <input id='input${post.CategoryId}' type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="">
                     <div class="input-group-append">
                         <span class="input-group-text">.00 руб.</span>
                     </div>
@@ -24,17 +24,33 @@ function _$(selector) {
     return document.getElementById(selector);
 }
 
-_$('addCategory').addEventListener('click', function() {
-   CatApi.CreateCat({
-       categoryName: _$('categoryName').value
-   });
-   _$('categoryName').value = '';
+_$('addCategory').addEventListener('click', function () {
+    Category.CreateCat({
+        categoryName: _$('categoryName').value
+    });
+    _$('categoryName').value = '';
 });
 
-class CatApi {
+document.addEventListener("DOMContentLoaded", () => {
+    let _html = '';
+    Category.GetCat().then(category => {
+        for(let i = 0; i < category.length; i++) {
+            
+            _html += card(category[i]);
+        }
+        _$('CategoriesDivContent').innerHTML = _html;
+    })
+});
+
+class Category {
+    static GetCat() {
+        return fetch('/category/exist', {
+            method: 'GET'
+        }).then(res => res.json());
+    }
     static CreateCat(cat) {
         return fetch('/category/new', {
-            method: 'Post',
+            method: 'POST',
             body: JSON.stringify(cat),
             headers: {
                 'Accept': 'application/json',

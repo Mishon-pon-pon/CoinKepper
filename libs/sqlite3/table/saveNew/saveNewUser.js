@@ -1,6 +1,6 @@
 const db = require('../../createDB');
 
-module.exports = async (obj, callback) => {
+module.exports = async (user, callback) => {
     return new Promise(resolve => {
         let newUser = db.prepare(`INSERT INTO Users(
             email, 
@@ -12,7 +12,7 @@ module.exports = async (obj, callback) => {
             avatarpath) 
             VALUES (?, ?, ?, ?, ?, ?, ?)`);
     
-        newUser.run(obj.email, false, obj.displayname, new Date(), obj.password, obj.salt, 'img/ava.jpg', () => {
+        newUser.run(user.email, false, user.displayname, new Date(), user.password, user.salt, 'img/ava.jpg', () => {
             callback();
             resolve();
         });

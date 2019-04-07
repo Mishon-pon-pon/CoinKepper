@@ -13,18 +13,18 @@ exports.get = async (ctx, next) => {
 
 exports.post = async (ctx, next) => {
     ///// test /////
-    await new Promise(resolve => {
-        db.run(`DELETE FROM Users`, (err, row) => {
-            resolve();
-        })
-    });
+    // await new Promise(resolve => {
+    //     db.run(`DELETE FROM Users`, (err, row) => {
+    //         resolve();
+    //     })
+    // });
     /////////////////
 
     ctx.request.body.salt = crypto.randomBytes(config.get('crypto.iterations')).toString('hex');
     ctx.request.body.password = await cryptoPass(ctx.request.body.salt, ctx.request.body.password);
     await saveNewUser(ctx.request.body, () => {});
     console.log('localhost:20319/')
-    sendMail(ctx.request.body.email, 'http://localhost:20319/confirmemail/:' + ctx.request.body.salt);
+    // sendMail(ctx.request.body.email, 'http://localhost:20319/confirmemail/:' + ctx.request.body.salt);
     ctx.body = ctx.render('infoConfirmEmail.pug', {email: ctx.request.body.email});
     ctx.statusCode = 200;
 }
