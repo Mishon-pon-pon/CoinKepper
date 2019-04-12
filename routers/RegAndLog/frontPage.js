@@ -1,7 +1,9 @@
+const fs = require('fs');
+
 exports.get = async (ctx, next) => {
-    const x = ctx.isAuthenticated();
     if (ctx.isAuthenticated()) {
-        ctx.body = ctx.render('app.pug')
+        ctx.type = 'html'
+        ctx.body = ctx.htmlrender('./client/app.html');
     } else {
         ctx.body = ctx.render('login.pug')
     }
