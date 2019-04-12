@@ -1,49 +1,33 @@
-const card = post => {
-    return `<div class="input-group mb-3" id="${post.CategoryId}">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">${post.Name}</span>
-                    </div>
-                    <input id='input${post.CategoryId}' type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="${post.Value}">
-                    <div class="input-group-append">
-                        <span class="input-group-text">.00 руб.</span>
-                    </div>
-                    <button style='font-size: 10px;' categoryid="${post.CategoryId}" type="button" class="btn btn-success" style="margin:15px;">+</button>
-                    <div class="dropdown dropright"  sytle="margin-left:15px;">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Дополнительно
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button button_number="${post.CategoryId}" type="button" class="btn red dropdown-item btn-danger">удалить категрию</button>
-                            <button type="button" class="btn dropdown-item grey btn-secondary" data-toggle="modal" data-target="#exampleModal" categoryId="${post.CategoryId}">история операций</button>
-                        </div>
-                    </div>
-                </div>`
-};
+var CategoriesDivContent = new Vue({
+    el: '#CategoriesDivContent',
+    data: {
+        categories: []
+    }
+})
+
+
 
 function _$(selector) {
     return document.getElementById(selector);
 }
 
-
-
-
-
 _$('addCategory').addEventListener('click', function () {
     Category.CreateCat({
         categoryName: _$('categoryName').value
+    }).then((res) => {
+        CategoriesDivContent.categories.push({
+            CategoryId: res.CategoryId,
+            Name: _$('categoryName').value,
+            input: 'input',
+            Value: 0
+        })
+        _$('categoryName').value = '';
     });
-    _$('categoryName').value = '';
+    
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    let _html = '';
-    Category.GetCat().then(category => {
-        for (let i = 0; i < category.length; i++) {
-
-            _html += card(category[i]);
-        }
-        _$('CategoriesDivContent').innerHTML = _html;
-    })
+    UseCategoryData();
 });
 
 _$('body').addEventListener('click', (event) => {
@@ -53,12 +37,29 @@ _$('body').addEventListener('click', (event) => {
             value: value,
             CategoryId: event.target.getAttribute('categoryid')
         }).then(res => res);
-        _$('input' + event.target.getAttribute('categoryid')).value = ''
+        CategoriesDivContent.categories.forEach((item) => {
+            if(item.CategoryId == event.target.getAttribute('categoryid')) {
+                item.Value = item.Value + Number(_$('input' + event.target.getAttribute('categoryid')).value)
+            }
+        });
     }
 })
 
+_$('body').addEventListener('click', (event) => {
+    if (event.target.getAttribute('inputCategory')) {
+        _$('input' + event.target.getAttribute('inputCategory')).value = ''
+    }
+});
 
-
+function UseCategoryData() {
+    Category.GetCat().then(category => {
+        category.forEach((item) => {
+            item.input = 'input';
+        })
+        CategoriesDivContent.categories = category;
+       
+    })
+}
 
 class Category {
     static GetCat() {
@@ -74,7 +75,7 @@ class Category {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        }).then(res => res)
+        }).then(res => res.json())
     }
     static DeleteCat(id) {
         return fetch(`/category/delete/${id}`, {
@@ -95,7 +96,6 @@ class Sum {
         }).then(res => res)
     }
 }
-
 
 
 /*const posts = [];

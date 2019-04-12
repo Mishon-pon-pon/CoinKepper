@@ -26,13 +26,24 @@ block content
                     div(class="modal-body" id="history")
                 div(class="modal-footer")
                     button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
-
     div(class="container")
         div(class="row")
             div(class="col-8")
                 div(id="CategoriesDivContent")
+                    div(class="input-group mb-3" v-for="category in categories" v-bind:id="category.CategoryId")
+                        div(class="input-group-prepend")
+                            span(class="input-group-text") {{category.Name}}
+                    input(v-bind:id='input + category.CategoryId' type="text" class="form-control" aria-label="Amount (to the nearest dollar)" v-bind:value="category.Value")
+                    div(class="input-group-append")
+                        span(class="input-group-text") .00 руб.
+                    button(v-bind:categoryid="category.CategoryId" type="button" class="btn btn-success") +
+                    div(class="dropdown dropright"  sytle="margin-left:15px;")
+                        button(class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Дополнительно
+                        div(class="dropdown-menu" aria-labelledby="dropdownMenuButton")
+                            button(v-bind:button_number="category.CategoryId" type="button" class="btn red dropdown-item btn-danger") удалить категрию
+                            button(type="button" class="btn dropdown-item grey btn-secondary" data-toggle="modal" data-target="#exampleModal" v-bind:categoryId="category.CategoryId") история операций
             div(class="col-12")
-                div(id="container"  style="min-width: 310px; height: 400px; margin: 0 auto")
+                div(id="container")
         a(class="link" href="statistics.html") Статистика
     script(src="index.js")
     script(src="historyOperation.js")
