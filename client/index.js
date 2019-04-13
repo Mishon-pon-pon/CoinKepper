@@ -11,16 +11,28 @@ function _$(selector) {
     return document.getElementById(selector);
 }
 
+function addNewCategory(id, name, value) {
+    CategoriesDivContent.categories.push({
+        CategoryId: id,
+        Name: name,
+        input: 'input',
+        Value: value
+    });
+};
+function deleteCategory(id) {
+    for(let i = 0; i < CategoriesDivContent.categories.length; i++) {
+        if(CategoriesDivContent.categories[i].CategoryId == id) {
+            CategoriesDivContent.categories.splice(i, 1);
+        }
+    }
+};
+
 _$('addCategory').addEventListener('click', function () {
+    let CategoryName = _$('categoryName').value;
     Category.CreateCat({
-        categoryName: _$('categoryName').value
+        categoryName: CategoryName
     }).then((res) => {
-        CategoriesDivContent.categories.push({
-            CategoryId: res.CategoryId,
-            Name: _$('categoryName').value,
-            input: 'input',
-            Value: 0
-        })
+        addNewCategory(res.CategoryId, CategoryName, 0);
         _$('categoryName').value = '';
     });
     
@@ -48,6 +60,14 @@ _$('body').addEventListener('click', (event) => {
 _$('body').addEventListener('click', (event) => {
     if (event.target.getAttribute('inputCategory')) {
         _$('input' + event.target.getAttribute('inputCategory')).value = ''
+    }
+});
+
+_$('body').addEventListener('click', (event) => {
+    if(event.target.getAttribute('button_number')) {
+        let CategoryId = event.target.getAttribute('button_number');
+        Category.DeleteCat(CategoryId).then(res => {});
+        deleteCategory(CategoryId);
     }
 });
 
