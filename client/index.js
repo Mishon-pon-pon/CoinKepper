@@ -3,31 +3,11 @@ var CategoriesDivContent = new Vue({
     data: {
         categories: []
     }
-})
+});
 
-// function parsVueOnHch()
-
-
-function _$(selector) {
-    return document.getElementById(selector);
-}
-
-function addNewCategory(id, name, value) {
-    CategoriesDivContent.categories.push({
-        CategoryId: id,
-        Name: name,
-        input: 'input',
-        Value: value
-    });
-};
-function deleteCategory(id) {
-    for (let i = 0; i < CategoriesDivContent.categories.length; i++) {
-        if (CategoriesDivContent.categories[i].CategoryId == id) {
-            CategoriesDivContent.categories.splice(i, 1);
-        }
-    }
-    renderHigChart(CategoriesDivContent.categories)
-};
+document.addEventListener("DOMContentLoaded", () => {
+    UseCategoryData();
+});
 
 _$('addCategory').addEventListener('click', function () {
     let CategoryName = _$('categoryName').value;
@@ -38,10 +18,6 @@ _$('addCategory').addEventListener('click', function () {
         _$('categoryName').value = '';
     });
 
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    UseCategoryData();
 });
 
 _$('body').addEventListener('click', (event) => {
@@ -73,6 +49,28 @@ _$('body').addEventListener('click', (event) => {
         deleteCategory(CategoryId);
     }
 });
+
+function _$(elementId) {
+    return document.getElementById(elementId);
+}
+
+function addNewCategory(id, name, value) {
+    CategoriesDivContent.categories.push({
+        CategoryId: id,
+        Name: name,
+        input: 'input',
+        Value: value
+    });
+};
+
+function deleteCategory(id) {
+    for (let i = 0; i < CategoriesDivContent.categories.length; i++) {
+        if (CategoriesDivContent.categories[i].CategoryId == id) {
+            CategoriesDivContent.categories.splice(i, 1);
+        }
+    }
+    renderHigChart(CategoriesDivContent.categories)
+};
 
 function UseCategoryData() {
     Category.GetCat().then(category => {
