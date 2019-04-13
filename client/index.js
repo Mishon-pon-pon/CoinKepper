@@ -5,6 +5,7 @@ var CategoriesDivContent = new Vue({
     }
 })
 
+// function parsVueOnHch()
 
 
 function _$(selector) {
@@ -20,11 +21,12 @@ function addNewCategory(id, name, value) {
     });
 };
 function deleteCategory(id) {
-    for(let i = 0; i < CategoriesDivContent.categories.length; i++) {
-        if(CategoriesDivContent.categories[i].CategoryId == id) {
+    for (let i = 0; i < CategoriesDivContent.categories.length; i++) {
+        if (CategoriesDivContent.categories[i].CategoryId == id) {
             CategoriesDivContent.categories.splice(i, 1);
         }
     }
+    renderHigChart(CategoriesDivContent.categories)
 };
 
 _$('addCategory').addEventListener('click', function () {
@@ -35,7 +37,7 @@ _$('addCategory').addEventListener('click', function () {
         addNewCategory(res.CategoryId, CategoryName, 0);
         _$('categoryName').value = '';
     });
-    
+
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -50,10 +52,11 @@ _$('body').addEventListener('click', (event) => {
             CategoryId: event.target.getAttribute('categoryid')
         }).then(res => res);
         CategoriesDivContent.categories.forEach((item) => {
-            if(item.CategoryId == event.target.getAttribute('categoryid')) {
+            if (item.CategoryId == event.target.getAttribute('categoryid')) {
                 item.Value = item.Value + Number(_$('input' + event.target.getAttribute('categoryid')).value)
             }
         });
+        renderHigChart(CategoriesDivContent.categories)
     }
 })
 
@@ -64,9 +67,9 @@ _$('body').addEventListener('click', (event) => {
 });
 
 _$('body').addEventListener('click', (event) => {
-    if(event.target.getAttribute('button_number')) {
+    if (event.target.getAttribute('button_number')) {
         let CategoryId = event.target.getAttribute('button_number');
-        Category.DeleteCat(CategoryId).then(res => {});
+        Category.DeleteCat(CategoryId).then(res => { });
         deleteCategory(CategoryId);
     }
 });
@@ -77,7 +80,7 @@ function UseCategoryData() {
             item.input = 'input';
         })
         CategoriesDivContent.categories = category;
-       
+        renderHigChart(category)
     })
 }
 
@@ -115,6 +118,45 @@ class Sum {
             }
         }).then(res => res)
     }
+}
+
+
+function renderHigChart(data) {
+    let chartData = [];
+    for(let i = 0; i < data.length; i++) {
+        chartData.push({name: data[i].Name, y: data[i].Value})
+    }
+    return Highcharts.chart('container', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Ваши траты в процентах к общей сумме'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Вы потратили',
+            colorByPoint: true,
+            data: chartData
+        }]
+    });
 }
 
 
