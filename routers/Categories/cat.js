@@ -11,14 +11,13 @@ exports.post = async (ctx, next) => {
         db.serialize(() => {
             let newCat = db.prepare(`INSERT INTO Categories(Name, AccountId, createDate) VALUES(?, ?, CURRENT_TIMESTAMP)`);
             newCat.run(ctx.request.body.categoryName, ctx.session.passport.user);
-            newCat.finalize((err) => {});
+            newCat.finalize((err) => { });
             db.get(`SELECT CategoryId FROM Categories WHERE CategoryId=last_insert_rowid();`, (err, row) => {
                 resolve(row);
             })
         })
     }).then(result => {
         if (result) {
-            console.log(result)
             ctx.statusCode = 200;
             ctx.body = result;
         }
@@ -39,10 +38,28 @@ exports.get = async (ctx, next) => {
                 left join Sum as s ON s.CategoryId = cat.CategoryId
                 where AccountId = ?
                 GROUP BY cat.CategoryId;`, [ctx.session.passport.user], (err, row) => {
-            categories.push(row);
-        }, () => {
-            ctx.body = categories;
-            resolve();
-        });
+                categories.push(row);
+            }, () => {
+                ctx.body = categories;
+                resolve();
+            });
     });
+}
+
+exports.delete = async (ctx, next) => {
+    await new Promise(resolve => {
+        db.serialize(() => {
+            let DeleteCategory = db.prepare(`DELETE FROM Categories WHERE CategoryId = ?`)
+            DeleteCategory.run(ctx.params.id)
+            DeleteCategory.finalize();
+            let DeleteSum = db.prepare(`DELETE FROM Sum WHERE CategoryId = ?`);
+            DeleteSum.run(ctx.params.id)
+            DeleteSum.finalize(() => {
+                resolve();
+            });
+        })
+    })
+    ctx.statusCode = 200;
+    ctx.body = 'Ok'
+
 }
