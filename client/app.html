@@ -1,7 +1,9 @@
+<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -73,7 +75,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">{{category.Name}}</span>
                             </div>
-                            <input v-bind:inputCategory="category.CategoryId" v-bind:id='category.input + category.CategoryId' type="text" class="form-control"
+                            <input v-bind:inputCategory="category.CategoryId"
+                                v-bind:id='category.input + category.CategoryId' type="text" class="form-control"
                                 aria-label="Amount (to the nearest dollar)" v-bind:value="category.Value">
                             <div class="input-group-append">
                                 <span class="input-group-text">.00 руб.</span>
@@ -91,7 +94,8 @@
                                     <button v-bind:button_number="category.CategoryId" type="button"
                                         class="btn red dropdown-item btn-danger">удалить категрию</button>
                                     <button type="button" class="btn dropdown-item grey btn-secondary"
-                                        data-toggle="modal" data-target="#exampleModal" v-bind:categoryId="category.CategoryId">история
+                                        data-toggle="modal" data-target="#exampleModal"
+                                        v-bind:categoryId="category.CategoryId">история
                                         операций</button>
                                 </div>
                             </div>

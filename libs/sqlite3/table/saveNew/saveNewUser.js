@@ -12,7 +12,7 @@ module.exports = async (user, callback) => {
             avatarpath) 
             VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?, ?, ?)`);
     
-        newUser.run(user.email, false, user.displayname, new Date(), user.password, user.salt, 'img/ava.jpg', () => {
+        newUser.run(user.email, false, user.displayname, user.password, user.salt, 'img/ava.jpg', () => {
             callback();
             resolve();
         });
