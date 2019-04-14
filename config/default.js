@@ -4,7 +4,7 @@ module.exports = {
     },
     templateFolder: process.cwd() + '/templates',
     dataBase: 'db.db',
-    public: 'client',
+    public: 'public',
     crypto: {
         iterations: 128,
         keylen: 64,
