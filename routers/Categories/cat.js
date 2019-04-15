@@ -13,6 +13,8 @@ exports.post = async (ctx, next) => {
             newCat.run(ctx.request.body.categoryName, ctx.session.passport.user);
             newCat.finalize((err) => { });
             db.get(`SELECT CategoryId FROM Categories WHERE CategoryId=last_insert_rowid();`, (err, row) => {
+                row.Name = ctx.request.body.categoryName;
+                row.Value = 0;
                 resolve(row);
             })
         })

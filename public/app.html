@@ -82,7 +82,7 @@
                             <div class="input-group-append">
                                 <span class="input-group-text">.00 руб.</span>
                             </div>
-                            <button style="font-size: 10px;" v-bind:categoryid="category.CategoryId" type="button"
+                            <button style="font-size: 10px;" v-bind:button_addSum="category.CategoryId" type="button"
                                 class="btn btn-success">+</button>
                             <div class="dropdown dropright" sytle="margin-left:15px;">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -92,7 +92,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
                                     x-placement="right-start"
                                     style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 0px, 0px);">
-                                    <button v-bind:button_number="category.CategoryId" type="button"
+                                    <button v-bind:button_delete="category.CategoryId" type="button"
                                         class="btn red dropdown-item btn-danger">удалить категрию</button>
                                     <button type="button" class="btn dropdown-item grey btn-secondary"
                                         data-toggle="modal" data-target="#exampleModal"

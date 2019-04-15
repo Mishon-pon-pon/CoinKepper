@@ -1,9 +1,5 @@
-export function renderHigChart(data) {
-    let chartData = [];
-    for(let i = 0; i < data.length; i++) {
-        chartData.push({name: data[i].Name, y: data[i].Value})
-    }
-    return Highcharts.chart('container', {
+export function highChart(elementId, chartData) {
+    return Highcharts.chart(elementId, {
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
