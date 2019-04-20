@@ -10,11 +10,10 @@ exports.post = async (ctx, next) => {
     await new Promise(resolve => {
         db.serialize(() => {
             let newCat = db.prepare(`INSERT INTO Categories(Name, AccountId, createDate) VALUES(?, ?, CURRENT_TIMESTAMP)`);
-            newCat.run(ctx.request.body.categoryName, ctx.session.passport.user);
+            newCat.run(ctx.request.body.Name, ctx.session.passport.user);
             newCat.finalize((err) => { });
             db.get(`SELECT CategoryId FROM Categories WHERE CategoryId=last_insert_rowid();`, (err, row) => {
                 row.Name = ctx.request.body.categoryName;
-                row.Value = 0;
                 resolve(row);
             })
         })
@@ -57,11 +56,11 @@ exports.delete = async (ctx, next) => {
             let DeleteSum = db.prepare(`DELETE FROM Sum WHERE CategoryId = ?`);
             DeleteSum.run(ctx.params.id)
             DeleteSum.finalize(() => {
-                resolve();
+                resolve(ctx.params.id);
             });
         })
+    }).then(result => {
+        ctx.statusCode = 200;
+        ctx.body = result;
     })
-    ctx.statusCode = 200;
-    ctx.body = 'Ok'
-
 }

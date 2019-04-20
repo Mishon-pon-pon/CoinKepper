@@ -6,14 +6,14 @@ exports.post = async (ctx, next) => {
         db.serialize(() => {
             let createSum = db.prepare(`INSERT INTO Sum(Value, CategoryId, createDate) VALUES(?, ?, CURRENT_TIMESTAMP)`)
             createSum.run(ctx.request.body.Value, ctx.request.body.CategoryId);
-            createSum.finalize((err) => {
-                if(!err) resolve(true);
+            db.get(`SELECT * FROM Sum WHERE SumId=last_insert_rowid();`, (err, row) => {
+                resolve(row);
             })
         })
-    }).then((result) => {
+    }).then(result => {
         if(result){
             ctx.statusCode = 200;
-            ctx.body = 'ok'
+            ctx.body = result;
         }
     })
 }
