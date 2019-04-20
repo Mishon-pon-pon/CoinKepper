@@ -1,6 +1,7 @@
 import { Category, Sum } from "../Model";
-import { vue } from "../View";
+import { vue } from "../View/index";
 import { routers } from "../Routers";
+import { highChart } from "../View/highcharts";
 
 /*controllers*/
 
@@ -8,10 +9,13 @@ import { routers } from "../Routers";
 export const CategoryController = {
     dataCash: [],
     update: function () {
+        let highChartData = [];
         for (var i = 0; i < this.dataCash.length; i++) {
             this.dataCash[i]['input'] = 'input';
+            highChartData.push({name: this.dataCash[i].Name, y: this.dataCash[i].Value})
         }
         vue.categories = this.dataCash;
+        highChart('container', highChartData);
     },
     load: function (url) {
         routers.get(url)
@@ -44,6 +48,7 @@ export const CategoryController = {
     }
 }
 
+/* SumController */
 export const SumController = {
     save: function (url, newSum) {
         routers.post(url, newSum)
@@ -54,19 +59,13 @@ export const SumController = {
                             item.Value += sum.Value;
                             CategoryController.update();
                         }
-                    })
-                    // for(var i = 0; CategoryController.dataCash.length; i++) {
-                    //     if(CategoryController.dataCash[i].CategoryId == newSum.CategoryId) {
-                    //         CategoryController.dataCash[i].Value += sum.Value;
-                    //         CategoryController.update();
-                    //     }
-                    // }
+                    });
                 }
             });
     }
 }
 
-/* SumController */
+
 
 
 /*export const controller = {

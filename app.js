@@ -21,12 +21,12 @@ router.post('/', require('./routers/RegAndLog/login').post);
 router.post('/logout', require('./routers/RegAndLog/logout').post);
 
 // categories
-router.post('/category/new', require('./routers/Categories/cat').post);
-router.get('/category/exist', require('./routers/Categories/cat').get);
-router.delete('/category/delete/:id', require('./routers/Categories/cat').delete);
+router.post('/category/new', require('./routers/cat').post);
+router.get('/category/exist', require('./routers/cat').get);
+router.delete('/category/delete/:id', require('./routers/cat').delete);
 
 // sum
-router.post('/sum/new', require('./routers/Sum/sum').post);
+router.post('/sum/new', require('./routers/sum').post);
 
 app.use(router.routes());
 
