@@ -26,5 +26,15 @@ document.getElementById('body').addEventListener('click', event => {
         let CategoryId = event.target.getAttribute('button_getSumHistory');
         SumController.load('/sum/category', CategoryId);
     }
+    if(event.target.getAttribute('edit_buttonid')) {
+        let SumId = event.target.getAttribute('edit_buttonid');
+        $('[edit_buttonid = "' + SumId + '"]').toggle('hiden');
+        $('[save_buttonid = "' + SumId + '"]').toggle('hiden');
+    }
+    if(event.target.getAttribute('save_buttonid')) {
+        let SumId = event.target.getAttribute('save_buttonid');
+        $('[edit_buttonid = "' + SumId + '"]').toggle('hiden');
+        $('[save_buttonid = "' + SumId + '"]').toggle('hiden');
+    }
 });
 

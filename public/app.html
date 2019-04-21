@@ -69,18 +69,21 @@
                     </div>
                     <div>
                         <div class="modal-body" id="historyOperationDivContent">
-                            <div  v-for='sum in sums'>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">
+                            <div v-for='sum in sums' class="container">
+                                <div class="row historyOperationItem">
+                                    <span class="col-4">
                                         {{sum.createDate}}
                                     </span>
-                                    <span class="input-group-text">
+                                    <span class="col-4 sum_history">
                                         {{sum.Value}}
                                     </span>
-                                    <button>
+                                    <button style="display: none;" type="button" class="col-2 hidden btn btn-outline-success" v-bind:save_buttonid="sum.SumId">
+                                        Save
+                                    </button>
+                                    <button type="button" class="col-2 btn btn-outline-primary" v-bind:edit_buttonid="sum.SumId">
                                         Edit
                                     </button>
-                                    <button>
+                                    <button type="button" class="col-2 btn btn-outline-danger">
                                         Delete
                                     </button>
                                 </div>

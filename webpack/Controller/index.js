@@ -55,7 +55,6 @@ export const SumController = {
     load: function (url, id) {
         routers.get(url + `/${id}`)
             .then(res => {
-                console.log(res)
                 vueHistory.sums = res;
             });
     },

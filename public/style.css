@@ -105,3 +105,23 @@ display: inline-block;
   width: 100%;
   margin-bottom: 5px;
 }
+
+.historyOperationItem {
+  border-bottom: solid 1px lightgrey;
+}
+
+.historyOperationItem > button {
+  border: none;
+  border-radius: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.sum_history {
+  border-left: solid 1px lightgrey;
+  border-right: solid 1px lightgrey;
+}
+
+.historyOperationItem > * {
+  height: 24px;
+}
