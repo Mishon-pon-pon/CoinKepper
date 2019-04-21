@@ -12,7 +12,9 @@ export const CategoryController = {
         let highChartData = [];
         for (var i = 0; i < this.dataCash.length; i++) {
             this.dataCash[i]['input'] = 'input';
-            highChartData.push({name: this.dataCash[i].Name, y: this.dataCash[i].Value})
+            if (this.dataCash[i].Value !== 0) {
+                highChartData.push({ name: this.dataCash[i].Name, y: this.dataCash[i].Value })
+            }
         }
         vue.categories = this.dataCash;
         highChart('container', highChartData);
@@ -50,6 +52,12 @@ export const CategoryController = {
 
 /* SumController */
 export const SumController = {
+    load: function (url, id) {
+        routers.get(url + `/${id}`)
+            .then(res => {
+                console.log(res);
+            });
+    },
     save: function (url, newSum) {
         routers.post(url, newSum)
             .then(sum => {
