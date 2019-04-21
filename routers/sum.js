@@ -11,9 +11,26 @@ exports.post = async (ctx, next) => {
             })
         })
     }).then(result => {
-        if(result){
+        if (result) {
             ctx.statusCode = 200;
             ctx.body = result;
         }
     })
+};
+
+
+exports.get = async ctx => {
+    const sumCategory = [];
+    await new Promise((resolve, reject) => {
+        db.each(`SELECT * FROM Sum WHERE CategoryId = ${ctx.params.id}`, (err, row) => {
+            sumCategory.push(row);
+            
+        }, () => {
+            resolve(sumCategory);
+        });
+    }).then(sumCategory => {
+        ctx.statusCode = 200;
+        ctx.body = sumCategory;
+    })
+
 }
