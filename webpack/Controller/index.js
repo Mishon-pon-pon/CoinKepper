@@ -1,5 +1,5 @@
 import { Category, Sum } from "../Model";
-import { vue } from "../View/index";
+import { vue, vueHistory } from "../View/index";
 import { routers } from "../Routers";
 import { highChart } from "../View/highcharts";
 
@@ -55,7 +55,8 @@ export const SumController = {
     load: function (url, id) {
         routers.get(url + `/${id}`)
             .then(res => {
-                console.log(res);
+                console.log(res)
+                vueHistory.sums = res;
             });
     },
     save: function (url, newSum) {

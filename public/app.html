@@ -63,12 +63,30 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">History Operation</h5><button class="close"
+                        <h5 class="modal-title" id="exampleModalLabel">History Operation </h5><button class="close"
                             type="button" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">×</span></button>
                     </div>
-                    <div class="modal-body" id="history"></div>
-                    <table></table>
+                    <div>
+                        <div class="modal-body" id="historyOperationDivContent">
+                            <div  v-for='sum in sums'>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">
+                                        {{sum.createDate}}
+                                    </span>
+                                    <span class="input-group-text">
+                                        {{sum.Value}}
+                                    </span>
+                                    <button>
+                                        Edit
+                                    </button>
+                                    <button>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="modal-footer"><button class="btn btn-secondary" type="button"
                             data-dismiss="modal">Close</button></div>
                 </div>
@@ -113,17 +131,9 @@
                     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
-                Launch demo modal
-            </button>
             <a class="link" href="statistics.html">Статистика</a>
         </div>
         <script src="main.js"></script>
-        <script>
-            $('#HistoryDiv').on('shown.bs.modal', function () {
-                $('#myInput').trigger('focus')
-            })
-        </script>
     </div>
 </body>
 

@@ -6,3 +6,10 @@ export const vue = new Vue({
         categories: []
     }
 });
+
+export const vueHistory = new Vue({
+    el: '#historyOperationDivContent',
+    data: {
+        sums: []
+    }
+})
