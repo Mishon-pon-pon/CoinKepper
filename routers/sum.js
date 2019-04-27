@@ -24,7 +24,7 @@ exports.get = async ctx => {
     await new Promise((resolve, reject) => {
         db.each(`SELECT SumId, Value, strftime('%d. %m. %Yг', createDate) as createDate, CategoryId FROM Sum WHERE CategoryId = ${ctx.params.id}`, (err, row) => {
             sumCategory.push(row);
-            
+
         }, () => {
             resolve(sumCategory);
         });
@@ -33,4 +33,15 @@ exports.get = async ctx => {
         ctx.body = sumCategory;
     })
 
+};
+
+exports.delete = async ctx => {
+    const SumId = ctx.params.id;
+    await new Promise(resolve => {
+        db.run(`DELETE FROM Sum WHERE SumId = ?`, SumId, () => {
+            resolve();
+        });
+    })
+    ctx.statusCode = 200;
+    ctx.body = { SumId: ctx.params.id };
 }

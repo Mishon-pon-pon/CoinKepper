@@ -28,6 +28,7 @@ router.delete('/category/delete/:id', require('./routers/cat').delete);
 // sum
 router.post('/sum/new', require('./routers/sum').post);
 router.get('/sum/category/:id', require('./routers/sum').get);
+router.delete('/sum/delete/:id', require('./routers/sum').delete);
 
 app.use(router.routes());
 
