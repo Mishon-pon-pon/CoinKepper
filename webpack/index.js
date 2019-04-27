@@ -36,5 +36,9 @@ document.getElementById('body').addEventListener('click', event => {
         $('[edit_buttonid = "' + SumId + '"]').toggle('hiden');
         $('[save_buttonid = "' + SumId + '"]').toggle('hiden');
     }
+    if(event.target.getAttribute('button_deleteSum')) {
+        let SumId = event.target.getAttribute('button_deleteSum');
+        SumController.delete('/sum/delete', SumId);
+    }
 });
 
