@@ -8,15 +8,15 @@ import { highChart } from "../View/highcharts";
 /* CategoryController */
 export const CategoryController = {
     dataCache: [],
-    update: function () {
+    update: function (data) {
         let highChartData = [];
-        for (var i = 0; i < this.dataCache.length; i++) {
-            this.dataCache[i]['input'] = 'input';
-            if (this.dataCache[i].Value !== 0) {
-                highChartData.push({ name: this.dataCache[i].Name, y: this.dataCache[i].Value })
+        for (var i = 0; i < data.length; i++) {
+            data[i]['input'] = 'input';
+            if (data[i].Value !== 0) {
+                highChartData.push({ name: data.Name, y: data[i].Value })
             }
         }
-        vue.categories = this.dataCache;
+        vue.categories = data;
         highChart('container', highChartData);
     },
     load: function (url) {
@@ -26,7 +26,7 @@ export const CategoryController = {
                     for (var i = 0; i < categories.length; i++) {
                         this.dataCache.push(Object.assign(new Category(categories[i].Name, categories[i].CategoryId), new Sum(categories[i].Value, categories[i].CategoryId)));
                     }
-                    this.update();
+                    this.update(this.dataCache);
                 }
             });
     },
@@ -34,7 +34,7 @@ export const CategoryController = {
         routers.post(url, newCategory)
             .then(category => {
                 this.dataCache.push(Object.assign(new Category(newCategory.Name, category.CategoryId), new Sum(0, category.CategoryId)));
-                this.update();
+                this.update(this.dataCache);
             })
     },
     delete: function (url, id) {
@@ -43,7 +43,7 @@ export const CategoryController = {
                 for (var i = 0; i < this.dataCache.length; i++) {
                     if (this.dataCache[i].CategoryId == id) {
                         this.dataCache.splice(i, 1);
-                        this.update();
+                        this.update(this.dataCache);
                     }
                 }
             })
@@ -70,89 +70,30 @@ export const SumController = {
                     CategoryController.dataCache.forEach(item => {
                         if (item.CategoryId == sum.CategoryId) {
                             item.Value += sum.Value;
-                            CategoryController.update();
                         }
                     });
                 }
+                CategoryController.update(CategoryController.dataCache);
             });
     },
     delete: function (url, id) {
         routers.delete(url, id)
-        .then(res => {
-            debugger;
-            for(let i = 0; i < this.dataCache.length; i++) {
-                if(this.dataCache[i].SumId == res.SumId) {
-                    let Value = this.dataCache[i].Value;
-                    this.dataCache.splice(i, 1);
-                    for(let n = 0; n < CategoryController.dataCache.length; n++) {
-                        if(CategoryController.dataCache[n].CategoryId == this.dataCache[0].CategoryId) {
-                            CategoryController.dataCache[n].Value -= Value;
+            .then(res => {
+                debugger;
+                for (let i = 0; i < this.dataCache.length; i++) {
+                    if (this.dataCache[i].SumId == res.SumId) {
+                        let Value = this.dataCache[i].Value;
+                        this.dataCache.splice(i, 1);
+                        for (let n = 0; n < CategoryController.dataCache.length; n++) {
+                            if (CategoryController.dataCache[n].CategoryId == this.dataCache[0].CategoryId) {
+                                CategoryController.dataCache[n].Value -= Value;
+                            }
                         }
                     }
+                    this.update(this.dataCache);
+                    CategoryController.update(CategoryController.dataCache);
                 }
-                this.update(this.dataCache);
-                CategoryController.update();
-            }
-        })
+            })
             .catch(err => { if (err) console.log(err) });
     }
 }
-
-
-
-
-/*export const controller = {
-    _$: function (elementId) {
-        return document.getElementById(elementId);
-    },
-    DomLoad: function () {
-        return document.addEventListener("DOMContentLoaded", () => {
-            model.getData();
-        });
-    },
-    PushButtonAddCategory: function () {
-        this._$('addCategory').addEventListener('click', () => {
-            let CategoryName = this._$('categoryName').value;
-            model.addNewCat(CategoryName);
-            CategoryName = '';
-        })
-    },
-    PushButtonDeleteCategory: function () {
-        this._$('body').addEventListener('click', event => {
-            if (event.target.getAttribute('button_delete')) {
-                let CategoryId = event.target.getAttribute('button_delete');
-                model.deleteCat(CategoryId);
-            }
-        })
-    },
-    PushButtonAddSum: function () {
-        this._$('body').addEventListener('click', event => {
-            if (event.target.getAttribute('button_addSum')) {
-                let CategoryId = event.target.getAttribute('button_addSum');
-                let value = this._$('input' + CategoryId).value;
-                model.addSum({ CategoryId: CategoryId, Value: value });
-            }
-        })
-    },
-    ClearInputSum: function () {
-        this._$('body').addEventListener('click', event => {
-            if (event.target.getAttribute('inputCategory')) {
-                event.target.value = '';
-                // event.target.onblur = function () {
-                //     let CategoryId = event.target.getAttribute('inputCategory');
-                //     for (let i = 0; i < model.dataCache.length; i++) {
-                //         if (model.dataCache[i].CategoryId == CategoryId) {
-                //             event.target.value = model.dataCache[i].Value;
-                //         }
-                //     }
-                // }
-            }
-        });
-    },
-    init: function() {
-        for(var key in controller) {
-            if(key !== 'init')
-            controller[key]();
-        }
-    }
-}*/

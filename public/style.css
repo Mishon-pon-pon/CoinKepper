@@ -117,9 +117,12 @@ display: inline-block;
   padding-bottom: 0;
 }
 
-.sum_history {
+/* .sum_history {
   border-left: solid 1px lightgrey;
   border-right: solid 1px lightgrey;
+} */
+.historyOperationItem > input {
+  border: none;
 }
 
 .historyOperationItem > * {

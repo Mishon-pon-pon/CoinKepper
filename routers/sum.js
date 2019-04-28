@@ -22,7 +22,7 @@ exports.post = async (ctx, next) => {
 exports.get = async ctx => {
     const sumCategory = [];
     await new Promise((resolve, reject) => {
-        db.each(`SELECT SumId, Value, strftime('%d. %m. %Yг', createDate) as createDate, CategoryId FROM Sum WHERE CategoryId = ${ctx.params.id}`, (err, row) => {
+        db.each(`SELECT SumId, Value, strftime('%d. %m. %Y', createDate) as createDate, CategoryId FROM Sum WHERE CategoryId = ${ctx.params.id}`, (err, row) => {
             sumCategory.push(row);
 
         }, () => {
