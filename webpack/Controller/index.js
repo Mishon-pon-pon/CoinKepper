@@ -79,7 +79,6 @@ export const SumController = {
     delete: function (url, id) {
         routers.delete(url, id)
             .then(res => {
-                debugger;
                 for (let i = 0; i < this.dataCache.length; i++) {
                     if (this.dataCache[i].SumId == res.SumId) {
                         let Value = this.dataCache[i].Value;
