@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	"build": "webpack -d",
+    "build": "webpack -d",
     "test": "eslint **/*.js",
     "start": "NODE_PATH=./utils:./modules node index.js",
     "cypress:open": "cypress open"
   },
   "devDependencies": {
     "eslint": "*",
-    "eslint-config-google": "*"
+    "eslint-config-google": "*",
+    "koa-sqlite3-session": "^1.0.4"
   },
   "dependencies": {
     "aws": "*",
