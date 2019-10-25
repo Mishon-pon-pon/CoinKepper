@@ -13,7 +13,7 @@ export const CategoryController = {
         for (var i = 0; i < data.length; i++) {
             data[i]['input'] = 'input';
             if (data[i].Value !== 0) {
-                highChartData.push({ name: data.Name, y: data[i].Value })
+                highChartData.push({ name: data[i].Name, y: data[i].Value })
             }
         }
         vue.categories = data;
