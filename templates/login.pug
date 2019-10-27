@@ -4,7 +4,7 @@ block content
     div(class="row")
         div(class="col-6")
             h1 Вход
-            form(action="/" method="post")
+            form(action="/auth/local" method="post")
                 div(class="form-group")
                     label(for="email") Email
                     input(type="email" name='email' class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите email")
@@ -19,7 +19,7 @@ block content
                 button(class="btn btn-primary btn_logPage") Зарегистрироваться
     .row
         .col-6
-            a(href="#")
+            a(href="/auth/vkontakte")
                 button(class="btn btn-primary btn_logPage") Войти с помощью vk.com
     .row
         .col-6
@@ -27,5 +27,5 @@ block content
                 button(class="btn btn-primary btn_logPage") Войти с помощью github.com
     .row
         .col-6
-            a(href="#")
+            a(href="/auth/facebook")
                 button(class="btn btn-primary btn_logPage") Войти с помощью facebook.com

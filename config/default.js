@@ -14,11 +14,17 @@ module.exports = {
         transport: {
             host: "smtp.gmail.com",
             port: 465,
-            secure: true, // true for 465, false for other ports
-            auth: {
-                user: 'CoinKepperCorp@gmail.com', // generated ethereal user
-                pass: 'Kfpfymz@166' // generated ethereal password
-            }
+            secure: true // true for 465, false for other ports
+        }
+    },
+    auth: {
+        facebook: {
+            clientID: "546907092793321",
+            clientSecret: "1b1cdb0736dcd8791c74a0f6b1a39d13"
+        },
+        vk: {
+            clientID: '7185562',
+            clientSecret: 'J1GA28mST8Sj0kKWiaBy'
         }
     }
 }
