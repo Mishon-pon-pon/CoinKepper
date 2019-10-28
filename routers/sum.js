@@ -24,7 +24,9 @@ exports.get = async ctx => {
     await new Promise((resolve, reject) => {
         db.each(`SELECT s.SumId, s.Value, strftime('%d. %m. %Y', s.createDate) as createDate, s.CategoryId 
                     FROM Sum s 
-                    JOIN Categories c ON c.CategoryId = s.CategoryId WHERE s.CategoryId = ${ctx.params.id} and c.AccountId = ${ctx.session.passport.user}`, (err, row) => {
+                    JOIN Categories c ON c.CategoryId = s.CategoryId WHERE s.CategoryId = ${ctx.params.id} 
+                    and c.AccountId in (
+                        SELECT AccountId FROM Users WHERE email = '${ctx.session.passport.user}')`, (err, row) => {
             sumCategory.push(row);
 
         }, () => {
