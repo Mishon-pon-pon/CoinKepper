@@ -1,4 +1,4 @@
-./node_modules
+node_modules
 package-lock.json
 *.db
-./coinkepper-react/node_modules
+coinkepper-react/node_modules
