@@ -5,6 +5,7 @@ const db = require('../../libs/sqlite3/createDB');
 const crypto = require('crypto');
 const config = require('config');
 const sendMail = require('../../libs/nodemailer/nodemailer');
+const fs = require('fs');
 
 exports.get = async (ctx, next) => {
     await CreateTableUsers();
@@ -24,6 +25,7 @@ exports.post = async (ctx, next) => {
     ctx.request.body.password = await cryptoPass(ctx.request.body.salt, ctx.request.body.password);
     await saveNewUser(ctx.request.body, () => {});
     // sendMail(ctx.request.body.email, 'http://localhost:20319/confirmemail/:' + ctx.request.body.salt);
-    ctx.body = ctx.render('infoConfirmEmail.pug', {email: ctx.request.body.email});
+    ctx.body = fs.readFileSync('../../coinkepper-react/public/index.html');
+    // ctx.body = ctx.render('infoConfirmEmail.pug', {email: ctx.request.body.email});
     ctx.statusCode = 200;
 }
