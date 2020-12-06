@@ -8,8 +8,10 @@ const sendMail = require('../../libs/nodemailer/nodemailer');
 const fs = require('fs');
 
 exports.get = async (ctx, next) => {
-    await CreateTableUsers();
-    ctx.body = ctx.render('registration.pug')
+    // await CreateTableUsers();
+    // ctx.body = ctx.render('registration.pug')
+    ctx.type = 'html';
+    ctx.body = ctx.htmlrender(config.get('public') + '/index.html');
 }
 
 exports.post = async (ctx, next) => {
@@ -25,6 +27,7 @@ exports.post = async (ctx, next) => {
     ctx.request.body.password = await cryptoPass(ctx.request.body.salt, ctx.request.body.password);
     await saveNewUser(ctx.request.body, () => {});
     // sendMail(ctx.request.body.email, 'http://localhost:20319/confirmemail/:' + ctx.request.body.salt);
+    ctx.type = 'html';
     ctx.body = fs.readFileSync('../../coinkepper-react/public/index.html');
     // ctx.body = ctx.render('infoConfirmEmail.pug', {email: ctx.request.body.email});
     ctx.statusCode = 200;

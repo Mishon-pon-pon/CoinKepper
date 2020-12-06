@@ -16,7 +16,7 @@ require('./handlers/07_passport').init(app);
 
 // registration and login
 router.get('/registration', require('./routers/RegAndLog/registration').get);
-router.post('/registration', require('./routers/RegAndLog/registration').post);
+// router.post('/registration', require('./routers/RegAndLog/registration').post);
 router.get('/confirmemail/:id', require('./routers/RegAndLog/confirmEmail').get);
 router.get('/', require('./routers/RegAndLog/frontPage').get);
 router.post('/auth/local', require('./routers/RegAndLog/login').post);
