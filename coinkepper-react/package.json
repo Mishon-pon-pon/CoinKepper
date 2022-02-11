@@ -107,7 +107,7 @@
     "@babel/plugin-syntax-jsx": "^7.12.1",
     "@types/node-sass": "^4.11.1",
     "@types/react-router-dom": "^5.1.6",
-    "node-sass": "^4.0.0"
+    "node-sass": "^7.0.0"
   },
   "jest": {
     "roots": [
